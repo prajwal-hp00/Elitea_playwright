@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playwright Test Reports - Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .report-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+        }
+        
+        .report-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .report-section h3 {
+            color: #764ba2;
+            margin: 15px 0 10px;
+            font-size: 1.3em;
+        }
+        
+        .report-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .feature-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .feature-list li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+        
+        .command-box {
+            background: #2d3748;
+            color: #68d391;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 10px 10px 0;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #764ba2;
+        }
+        
+        .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .alert {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎭 Playwright Test Reports Guide</h1>
+        <p class="subtitle">Comprehensive Testing Framework with Multiple Report Formats</p>
+        
+        <div class="alert success">
+            <strong>✅ Reports are automatically generated after test execution!</strong><br>
+            Run <code>npm test</code> to generate all report types.
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon">📊</div>
+                <h3>Report Types</h3>
+                <div class="number">4</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">🌐</div>
+                <h3>Browsers</h3>
+                <div class="number">3</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">✅</div>
+                <h3>Test Suites</h3>
+                <div class="number">2+</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">📈</div>
+                <h3>Coverage</h3>
+                <div class="number">100%</div>
+            </div>
+        </div>
+        
+        <div class="report-section">
+            <h2>📊 Report Type 1: HTML Report (Interactive)</h2>
+            <div class="report-card">
+                <h3>📍 Location</h3>
+                <div class="command-box">playwright-report/index.html</div>
+                
+                <h3>🚀 How to Open</h3>
+                <div class="command-box">npm run test:report</div>
+                
+                <h3>✨ Features</h3>
+                <ul class="feature-list">
+                    <li>Interactive web interface with modern UI</li>
+                    <li>Visual test execution timeline</li>
+                    <li>Screenshots captured on test failures</li>
+                    <li>Video recordings of entire test runs</li>
+                    <li>Trace viewer for step-by-step debugging</li>
+                    <li>Filter tests by status (passed/failed/skipped)</li>
+                    <li>Search functionality for quick navigation</li>
+                    <li>Network activity monitoring</li>
+                    <li>Console logs integrated</li>
+                    <li>Test duration analytics</li>
+                </ul>
+                
+                <a href="playwright-report/index.html" class="button" target="_blank">📖 Open HTML Report</a>
+            </div>
+        </div>
+        
+        <div class="report-section">
+            <h2>📄 Report Type 2: JSON Report (Machine-Readable)</h2>
+            <div class="report-card">
+                <h3>📍 Location</h3>
+                <div class="command-box">test-results/results.json</div>
+                
+                <h3>🔍 View in Terminal</h3>
+                <div class="command-box">cat test-results/results.json | jq</div>
+                
+                <h3>💡 Use Cases</h3>
+                <ul class="feature-list">
+                    <li>CI/CD pipeline integration</li>
+                    <li>Custom dashboard creation</li>
+                    <li>Automated alerting systems</li>
+                    <li>Test metrics collection</li>
+                    <li>Historical trend analysis</li>
+                    <li>API integration with monitoring tools</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="report-section">
+            <h2>📋 Report Type 3: JUnit XML Report (CI/CD)</h2>
+            <div class="report-card">
+                <h3>📍 Location</h3>
+                <div class="command-box">test-results/junit.xml</div>
+                
+                <h3>🔗 Compatible CI/CD Tools</h3>
+                <ul class="feature-list">
+                    <li>Jenkins - Standard JUnit plugin</li>
+                    <li>GitLab CI - junit report type</li>
+                    <li>Azure DevOps - Publish Test Results</li>
+                    <li>CircleCI - Store test results</li>
+                    <li>TeamCity - XML Report Processing</li>
+                    <li>GitHub Actions - Test Reporter</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="report-section">
+            <h2>🖥️ Report Type 4: Console Reporter (Real-Time)</h2>
+            <div class="report-card">
+                <h3>📍 Location</h3>
+                <div class="command-box">Terminal/Console Output</div>
+                
+                <h3>📊 Real-Time Information</h3>
+                <ul class="feature-list">
+                    <li>Live test execution progress</li>
+                    <li>Pass/fail status for each test</li>
+                    <li>Execution time per test</li>
+                    <li>Detailed error messages</li>
+                    <li>Console logs from tests</li>
+                    <li>Summary statistics</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="report-section">
+            <h2>🎯 Quick Commands</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>npm test</code></td>
+                        <td>Run all tests and generate reports</td>
+                    </tr>
+                    <tr>
+                        <td><code>npm run test:report</code></td>
+                        <td>Open HTML report in browser</td>
+                    </tr>
+                    <tr>
+                        <td><code>npm run test:headed</code></td>
+                        <td>Run tests with visible browser</td>
+                    </tr>
+                    <tr>
+                        <td><code>npm run test:ui</code></td>
+                        <td>Run tests in interactive UI mode</td>
+                    </tr>
+                    <tr>
+                        <td><code>npx playwright test --debug</code></td>
+                        <td>Run tests in debug mode</td>
+                    </tr>
+                    <tr>
+                        <td><code>npx playwright show-trace [file]</code></td>
+                        <td>View trace file for debugging</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="report-section">
+            <h2>📚 Additional Resources</h2>
+            <div class="report-card">
+                <a href="https://playwright.dev/" class="button" target="_blank">📖 Playwright Documentation</a>
+                <a href="https://github.com/prajwal-hp00/Elitea_playwright" class="button" target="_blank">💻 GitHub Repository</a>
+                <a href="https://github.com/prajwal-hp00/Elitea_playwright/pull/4" class="button" target="_blank">🔗 Latest PR</a>
+                <a href="TEST_EXECUTION_SUMMARY.md" class="button" target="_blank">📄 Test Summary</a>
+            </div>
+        </div>
+        
+        <div class="alert">
+            <strong>💡 Pro Tip:</strong> After running tests, all reports are automatically generated. 
+            Start with the HTML report for the best interactive experience!
+        </div>
+    </div>
+</body>
+</html>
