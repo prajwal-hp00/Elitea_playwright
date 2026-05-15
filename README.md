@@ -216,6 +216,28 @@ npx playwright test --project=webkit
 
 Latest test implementation: [PR #4 - Homepage Verification Test](https://github.com/prajwal-hp00/Elitea_playwright/pull/4)
 
+## 📊 **How to View Reports on GitHub**
+
+**Important**: Reports are generated at runtime, not stored in the repository.
+
+### ✅ **Quick Setup (5 minutes):**
+
+1. **Create workflow file**: `.github/workflows/playwright-tests.yml`
+2. **Copy content from**: `GITHUB_ACTIONS_WORKFLOW.yml` (in this repo)
+3. **Commit and push**
+4. **Go to Actions tab** on GitHub
+5. **Download reports** from Artifacts section
+
+📖 **Detailed Guides:**
+- **[HOW_TO_VIEW_REPORTS_ON_GITHUB.md](./HOW_TO_VIEW_REPORTS_ON_GITHUB.md)** - Complete step-by-step instructions
+- **[GITHUB_REPORTS_GUIDE.html](./GITHUB_REPORTS_GUIDE.html)** - Visual interactive guide
+
+### 🚀 **After Setup:**
+- ✅ Tests run automatically on push/PR
+- ✅ All 4 report types generated (HTML, JSON, JUnit, Console)
+- ✅ Downloadable from GitHub Actions artifacts
+- ✅ Optional: Publish to GitHub Pages for easy sharing
+
 ## 🤝 Contributing
 
 1. Fork the repository
