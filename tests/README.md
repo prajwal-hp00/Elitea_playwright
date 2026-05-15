@@ -175,11 +175,33 @@ The test configuration is CI-ready:
 | Videos | `test-results/` | Test execution recording |
 | Traces | `test-results/` | Detailed debugging info |
 
+## 📊 **Viewing Reports on GitHub**
+
+**Important**: Reports are generated at runtime, not stored in the repository.
+
+### ✅ **To See Reports on GitHub:**
+
+1. **Set up GitHub Actions** (5 minutes):
+   - Copy content from `GITHUB_ACTIONS_WORKFLOW.yml`
+   - Create file: `.github/workflows/playwright-tests.yml`
+   - Commit and push
+
+2. **Access Reports**:
+   - Go to **Actions** tab on GitHub
+   - Click on workflow run
+   - Download from **Artifacts** section
+
+3. **Detailed Guides**:
+   - 📖 [HOW_TO_VIEW_REPORTS_ON_GITHUB.md](../HOW_TO_VIEW_REPORTS_ON_GITHUB.md)
+   - 🎯 [QUICK_START_GITHUB_ACTIONS.md](../QUICK_START_GITHUB_ACTIONS.md)
+   - 🌐 [GITHUB_REPORTS_GUIDE.html](../GITHUB_REPORTS_GUIDE.html)
+
 ## 📞 Support
 
 For issues or questions, please refer to:
 - [Playwright Documentation](https://playwright.dev/)
 - [Repository Issues](https://github.com/prajwal-hp00/Elitea_playwright/issues)
+- [GitHub Actions Guide](../HOW_TO_VIEW_REPORTS_ON_GITHUB.md)
 
 ---
 
