@@ -1,0 +1,288 @@
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                 🎭 HOW TO SEE REPORTS ON GITHUB                         │
+│                    Problem → Solution Flow                              │
+└─────────────────────────────────────────────────────────────────────────┘
+
+❌ CURRENT PROBLEM:
+┌──────────────────────────────────────────────────────────────────────┐
+│  "I can see test scripts on GitHub, but where are the reports?"     │
+│                                                                       │
+│  GitHub Repo Contains:                                               │
+│  ✅ tests/homepage.spec.ts (test script)                            │
+│  ✅ playwright.config.ts (configuration)                            │
+│  ✅ package.json (dependencies)                                     │
+│  ❌ playwright-report/ (NOT IN REPO!)                               │
+│  ❌ test-results/ (NOT IN REPO!)                                    │
+│                                                                       │
+│  WHY? Reports are GENERATED at runtime, not source code!            │
+└──────────────────────────────────────────────────────────────────────┘
+
+                              ⬇️
+
+✅ SOLUTION: GitHub Actions
+┌──────────────────────────────────────────────────────────────────────┐
+│                                                                       │
+│  Step 1: Create Workflow File                                        │
+│  ┌────────────────────────────────────────────────────────────┐    │
+│  │  File: .github/workflows/playwright-tests.yml               │    │
+│  │  Copy from: GITHUB_ACTIONS_WORKFLOW.yml                     │    │
+│  └────────────────────────────────────────────────────────────┘    │
+│                                                                       │
+│  Step 2: Workflow Triggers Automatically                             │
+│  ┌────────────────────────────────────────────────────────────┐    │
+│  │  • On push to main, feature/*, test/*                       │    │
+│  │  • On pull request to main                                  │    │
+│  │  • Manual trigger from Actions tab                          │    │
+│  └────────────────────────────────────────────────────────────┘    │
+│                                                                       │
+│  Step 3: Workflow Runs Tests                                         │
+│  ┌────────────────────────────────────────────────────────────┐    │
+│  │  1. Install Node.js & dependencies                          │    │
+│  │  2. Install Playwright browsers                             │    │
+│  │  3. Run: npm test                                           │    │
+│  │  4. Generate all 4 report types                             │    │
+│  │  5. Upload as downloadable artifacts                        │    │
+│  └────────────────────────────────────────────────────────────┘    │
+│                                                                       │
+│  Step 4: Download Reports                                            │
+│  ┌────────────────────────────────────────────────────────────┐    │
+│  │  Go to: Actions → Workflow Run → Artifacts                  │    │
+│  │                                                              │    │
+│  │  Available Downloads:                                        │    │
+│  │  📊 playwright-html-report (Interactive UI)                │    │
+│  │  📋 playwright-json-report (Machine data)                  │    │
+│  │  📄 playwright-junit-report (CI/CD format)                 │    │
+│  │  📸 test-screenshots (Failure images)                      │    │
+│  │  🎬 test-videos (Test recordings)                          │    │
+│  └────────────────────────────────────────────────────────────┘    │
+│                                                                       │
+└──────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════
+
+📊 DETAILED WORKFLOW EXECUTION:
+
+  Developer                 GitHub                    GitHub Actions
+     │                        │                            │
+     │  1. git push          │                            │
+     ├───────────────────────>│                            │
+     │                        │  2. Trigger workflow       │
+     │                        ├────────────────────────────>│
+     │                        │                            │
+     │                        │  3. Setup environment      │
+     │                        │  • Install Node.js         │
+     │                        │  • npm ci                  │
+     │                        │  • Install browsers        │
+     │                        │                            │
+     │                        │  4. Run tests             │
+     │                        │  • npm test                │
+     │                        │  • Execute test specs      │
+     │                        │                            │
+     │                        │  5. Generate reports      │
+     │                        │  • HTML report             │
+     │                        │  • JSON report             │
+     │                        │  • JUnit XML               │
+     │                        │  • Screenshots             │
+     │                        │  • Videos                  │
+     │                        │                            │
+     │                        │  6. Upload artifacts      │
+     │                        │<────────────────────────────│
+     │                        │                            │
+     │  7. View in Actions   │                            │
+     │<───────────────────────│                            │
+     │                        │                            │
+     │  8. Download reports  │                            │
+     │<───────────────────────│                            │
+     │                        │                            │
+
+═══════════════════════════════════════════════════════════════════════
+
+📁 FILE STRUCTURE:
+
+BEFORE GitHub Actions:
+elitea-playwright/
+├── tests/
+│   └── homepage.spec.ts           ✅ In repo
+├── playwright.config.ts           ✅ In repo
+├── package.json                   ✅ In repo
+├── playwright-report/             ❌ NOT in repo (runtime artifact)
+└── test-results/                  ❌ NOT in repo (runtime artifact)
+
+AFTER GitHub Actions Setup:
+elitea-playwright/
+├── .github/
+│   └── workflows/
+│       └── playwright-tests.yml   ✅ NEW - Workflow config
+├── tests/
+│   └── homepage.spec.ts           ✅ In repo
+├── playwright.config.ts           ✅ In repo
+├── package.json                   ✅ In repo
+├── GITHUB_ACTIONS_WORKFLOW.yml    ✅ Template to copy
+├── HOW_TO_VIEW_REPORTS_ON_GITHUB.md  ✅ Full guide
+├── GITHUB_REPORTS_GUIDE.html      ✅ Visual guide
+└── QUICK_START_GITHUB_ACTIONS.md  ✅ Quick reference
+
+Reports location after workflow runs:
+→ GitHub Actions → Workflow Run → Artifacts → Download
+
+═══════════════════════════════════════════════════════════════════════
+
+⚡ QUICK START COMMANDS:
+
+# Via GitHub UI (Easiest):
+1. Click "Add file" → "Create new file"
+2. Path: .github/workflows/playwright-tests.yml
+3. Copy content from GITHUB_ACTIONS_WORKFLOW.yml
+4. Commit
+
+# Via Command Line:
+cd Elitea_playwright
+git checkout feature/homepage-assertion-test
+mkdir -p .github/workflows
+cp GITHUB_ACTIONS_WORKFLOW.yml .github/workflows/playwright-tests.yml
+git add .github/workflows/
+git commit -m "Enable automated test reports"
+git push
+
+# View reports:
+1. Go to GitHub.com → Your repo → Actions tab
+2. Click on latest workflow run
+3. Scroll to Artifacts section
+4. Download playwright-html-report.zip
+5. Extract and open index.html
+
+═══════════════════════════════════════════════════════════════════════
+
+📊 WHAT YOU GET:
+
+┌─────────────────────────────────────────────────────────────────────┐
+│  BEFORE SETUP                       AFTER SETUP                     │
+│                                                                      │
+│  ❌ No reports on GitHub            ✅ Automatic test execution     │
+│  ❌ Manual test running             ✅ All 4 report types           │
+│  ❌ No CI/CD integration            ✅ Downloadable artifacts       │
+│  ❌ Hard to share results           ✅ PR comments with links       │
+│                                     ✅ Screenshots & videos         │
+│                                     ✅ Test summary in UI           │
+│                                     ✅ CI/CD ready                  │
+└─────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════
+
+🎯 COMPARISON: Options to View Reports
+
+┌────────────────┬──────────────────┬──────────────────┬──────────────┐
+│ Feature        │ GitHub Actions   │ GitHub Pages     │ Commit Files │
+├────────────────┼──────────────────┼──────────────────┼──────────────┤
+│ Automatic      │ ✅ Yes          │ ✅ Yes          │ ❌ Manual    │
+│ Easy Sharing   │ ⚠️ Download     │ ✅ URL Link     │ ❌ Hard      │
+│ Repo Size      │ ✅ No Bloat     │ ✅ No Bloat     │ ❌ Large     │
+│ Always Updated │ ✅ Yes          │ ✅ Yes          │ ❌ Manual    │
+│ CI/CD Friendly │ ✅ Perfect      │ ✅ Good         │ ❌ No        │
+│ Setup Time     │ ⚠️ 5 minutes    │ ⚠️ 10 minutes   │ ✅ Easy      │
+│ Best For       │ All cases       │ Public sharing  │ Not recommended │
+└────────────────┴──────────────────┴──────────────────┴──────────────┘
+
+        ⭐ RECOMMENDED: GitHub Actions + GitHub Pages
+
+═══════════════════════════════════════════════════════════════════════
+
+📚 DOCUMENTATION FILES:
+
+File Name                          Purpose                        Size
+─────────────────────────────────────────────────────────────────────
+GITHUB_ACTIONS_WORKFLOW.yml        Workflow template to copy      Medium
+HOW_TO_VIEW_REPORTS_ON_GITHUB.md   Complete step-by-step guide    Long
+GITHUB_REPORTS_GUIDE.html          Visual interactive guide       Medium
+QUICK_START_GITHUB_ACTIONS.md      Quick reference & commands     Short
+SOLUTION_REPORTS_ON_GITHUB.md      Problem-solution overview      Short
+WORKFLOW_DIAGRAM.txt               This file - ASCII diagrams     Long
+
+═══════════════════════════════════════════════════════════════════════
+
+✅ SUCCESS CHECKLIST:
+
+Setup Phase:
+□ Created .github/workflows/playwright-tests.yml
+□ Copied content from GITHUB_ACTIONS_WORKFLOW.yml
+□ Committed and pushed the workflow file
+□ Workflow file appears in GitHub repository
+
+Execution Phase:
+□ Pushed code or manually triggered workflow
+□ Workflow run appears in Actions tab
+□ Workflow completes successfully (green check)
+□ Artifacts section shows report files
+
+Download Phase:
+□ Downloaded playwright-html-report artifact
+□ Extracted the ZIP file
+□ Opened index.html in browser
+□ Viewed interactive test results
+
+Verification:
+□ Reports show correct test execution
+□ Screenshots/videos captured on failures
+□ Test summary displays properly
+□ Can share reports with team
+
+═══════════════════════════════════════════════════════════════════════
+
+🔧 TROUBLESHOOTING:
+
+Problem: "I don't see the Actions tab"
+Solution: Settings → Actions → General → Enable actions
+
+Problem: "Workflow not running"
+Check:   • File is at .github/workflows/playwright-tests.yml
+         • YAML syntax is valid
+         • Branch name matches trigger pattern (main, feature/*, test/*)
+
+Problem: "Tests failing in workflow"
+Solution: • Check workflow logs for error messages
+         • Run tests locally first: npm test
+         • Verify playwright.config.ts is correct
+
+Problem: "Can't download artifacts"
+Check:   • You're logged in to GitHub
+         • Workflow completed (even if tests failed)
+         • Artifacts haven't expired (30 day retention)
+
+Problem: "HTML report is empty"
+Solution: • Check if tests actually ran
+         • Verify reporter configuration in playwright.config.ts
+         • Look for errors in workflow logs
+
+═══════════════════════════════════════════════════════════════════════
+
+🎉 FINAL SUMMARY:
+
+QUESTION: "Why can't I see reports on the GitHub feature branch?"
+
+ANSWER:   Reports are GENERATED files, not source code!
+          They only exist after running tests.
+
+SOLUTION: Set up GitHub Actions to:
+          1. Run tests automatically
+          2. Generate all reports
+          3. Upload as downloadable artifacts
+
+TIME:     5 minutes to set up
+          Forever automated after that!
+
+RESULT:   ✅ Automatic test execution
+          ✅ All 4 report types
+          ✅ Downloadable from GitHub
+          ✅ Screenshots & videos
+          ✅ CI/CD ready
+
+═══════════════════════════════════════════════════════════════════════
+
+Next Step: Copy GITHUB_ACTIONS_WORKFLOW.yml to .github/workflows/
+           and commit it. Reports will be generated automatically!
+
+🎭 Happy Testing! ✨
+
+═══════════════════════════════════════════════════════════════════════
+```
