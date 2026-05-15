@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Reports Setup Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2e3440 0%, #3b4252 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .alert {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section h2 {
+            color: #2e3440;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .option-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        
+        .option-card h3 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .badge-recommended {
+            background: #28a745;
+            color: white;
+        }
+        
+        .badge-advanced {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .step {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .step h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .code-block {
+            background: #2e3440;
+            color: #a3be8c;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+        
+        .code-block pre {
+            margin: 0;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #e9ecef;
+        }
+        
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .feature-list li:before {
+            content: "✅";
+            position: absolute;
+            left: 10px;
+            font-size: 1.2em;
+        }
+        
+        .feature-list li.con:before {
+            content: "❌";
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .workflow-diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .workflow-step {
+            display: inline-block;
+            background: white;
+            padding: 20px 30px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .arrow {
+            display: inline-block;
+            font-size: 2em;
+            color: #667eea;
+            margin: 0 10px;
+        }
+        
+        footer {
+            background: #2e3440;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .workflow-step {
+                display: block;
+                margin: 20px 0;
+            }
+            
+            .arrow {
+                display: block;
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎭 View Test Reports on GitHub</h1>
+            <p>Complete Guide to Accessing Your Playwright Test Reports</p>
+        </header>
+        
+        <div class="content">
+            <div class="alert">
+                <strong>⚠️ Current Situation:</strong> Test scripts are on GitHub, but reports are not visible because they are generated at runtime, not stored in the repository.
+            </div>
+            
+            <div class="alert alert-success">
+                <strong>✅ Solution:</strong> Set up GitHub Actions to automatically run tests and generate reports on every push/PR!
+            </div>
+            
+            <!-- Option 1: GitHub Actions -->
+            <div class="section">
+                <h2>🚀 Option 1: GitHub Actions</h2>
+                <span class="badge badge-recommended">RECOMMENDED</span>
+                
+                <div class="option-card">
+                    <h3>Automatic Test Execution with Reports</h3>
+                    <p>Set up a workflow that automatically runs tests and generates reports whenever you push code or create a pull request.</p>
+                    
+                    <h4 style="margin-top: 30px; color: #333;">What You Get:</h4>
+                    <ul class="feature-list">
+                        <li>Automatic test execution on every push</li>
+                        <li>All 4 report types generated (HTML, JSON, JUnit, Console)</li>
+                        <li>Downloadable artifacts from GitHub Actions</li>
+                        <li>PR comments with report links</li>
+                        <li>Test summary in workflow page</li>
+                        <li>Screenshots and videos on failure</li>
+                    </ul>
+                    
+                    <h4 style="margin-top: 30px; color: #333;">Setup Steps:</h4>
+                    
+                    <div class="step">
+                        <h4>Step 1: Create Workflow File</h4>
+                        <p>Create a new file in your repository:</p>
+                        <div class="code-block">
+<pre>Path: .github/workflows/playwright-tests.yml</pre>
+                        </div>
+                        <p><strong>Method A - GitHub UI:</strong></p>
+                        <ol>
+                            <li>Go to your repository on GitHub</li>
+                            <li>Click "Add file" → "Create new file"</li>
+                            <li>Type the path: <code>.github/workflows/playwright-tests.yml</code></li>
+                            <li>Copy content from <code>GITHUB_ACTIONS_WORKFLOW.yml</code> in your repo</li>
+                            <li>Commit the file</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="step">
+                        <h4>Step 2: Trigger the Workflow</h4>
+                        <p><strong>Automatic Triggers:</strong></p>
+                        <ul>
+                            <li>✅ Push to <code>main</code>, <code>feature/*</code>, or <code>test/*</code> branches</li>
+                            <li>✅ Pull requests to <code>main</code> branch</li>
+                        </ul>
+                        <p><strong>Manual Trigger:</strong></p>
+                        <ol>
+                            <li>Go to "Actions" tab</li>
+                            <li>Click "Playwright Tests with Reports"</li>
+                            <li>Click "Run workflow" button</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="step">
+                        <h4>Step 3: Download Reports</h4>
+                        <p>After workflow completes:</p>
+                        <ol>
+                            <li>Go to "Actions" tab</li>
+                            <li>Click on the completed workflow run</li>
+                            <li>Scroll to "Artifacts" section at bottom</li>
+                            <li>Download:
+                                <ul>
+                                    <li><strong>playwright-html-report</strong> - Interactive HTML report</li>
+                                    <li><strong>playwright-json-report</strong> - JSON results</li>
+                                    <li><strong>playwright-junit-report</strong> - JUnit XML</li>
+                                    <li><strong>test-screenshots</strong> - Failure screenshots</li>
+                                    <li><strong>test-videos</strong> - Test execution videos</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <div class="step">
+                        <h4>Step 4: View HTML Report</h4>
+                        <div class="code-block">
+<pre># Extract the downloaded ZIP
+unzip playwright-html-report.zip
+
+# Open in browser
+open index.html        # Mac
+start index.html       # Windows
+xdg-open index.html    # Linux</pre>
+                        </div>
+                    </div>
+                    
+                    <a href="https://github.com/prajwal-hp00/Elitea_playwright/actions" class="button">Go to GitHub Actions →</a>
+                </div>
+            </div>
+            
+            <!-- Workflow Diagram -->
+            <div class="section">
+                <h2>📊 How It Works</h2>
+                <div class="workflow-diagram">
+                    <div class="workflow-step">
+                        <strong>1. Push Code</strong><br>
+                        <small>to GitHub</small>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="workflow-step">
+                        <strong>2. Workflow Triggered</strong><br>
+                        <small>GitHub Actions</small>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="workflow-step">
+                        <strong>3. Tests Run</strong><br>
+                        <small>Playwright executes</small>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="workflow-step">
+                        <strong>4. Reports Generated</strong><br>
+                        <small>4 formats created</small>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="workflow-step">
+                        <strong>5. Upload Artifacts</strong><br>
+                        <small>Available for download</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Option 2: GitHub Pages -->
+            <div class="section">
+                <h2>🌐 Option 2: GitHub Pages</h2>
+                <span class="badge badge-advanced">ADVANCED</span>
+                
+                <div class="option-card">
+                    <h3>Publish Reports to Public URL</h3>
+                    <p>Deploy your HTML report to GitHub Pages for easy sharing with your team.</p>
+                    
+                    <h4 style="margin-top: 30px; color: #333;">Benefits:</h4>
+                    <ul class="feature-list">
+                        <li>Live URL to share reports</li>
+                        <li>No download required</li>
+                        <li>Always shows latest results</li>
+                        <li>Professional presentation</li>
+                    </ul>
+                    
+                    <div class="step">
+                        <h4>Enable GitHub Pages:</h4>
+                        <ol>
+                            <li>Go to repository <strong>Settings</strong></li>
+                            <li>Click <strong>Pages</strong> in sidebar</li>
+                            <li>Under <strong>Source</strong>, select: <strong>GitHub Actions</strong></li>
+                            <li>Click <strong>Save</strong></li>
+                        </ol>
+                        <p>Your reports will be published at:</p>
+                        <div class="code-block">
+<pre>https://prajwal-hp00.github.io/Elitea_playwright/</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Comparison Table -->
+            <div class="section">
+                <h2>📋 Options Comparison</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>GitHub Actions</th>
+                            <th>GitHub Pages</th>
+                            <th>Commit Reports</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Automatic</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>❌ Manual</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Easy Sharing</strong></td>
+                            <td>⚠️ Download Required</td>
+                            <td>✅ URL Link</td>
+                            <td>❌ Hard</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Repository Size</strong></td>
+                            <td>✅ No Bloat</td>
+                            <td>✅ No Bloat</td>
+                            <td>❌ Large Files</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Always Updated</strong></td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                            <td>❌ Manual</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CI/CD Friendly</strong></td>
+                            <td>✅ Perfect</td>
+                            <td>✅ Good</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Setup Complexity</strong></td>
+                            <td>⚠️ Medium</td>
+                            <td>⚠️ Medium</td>
+                            <td>✅ Easy</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Quick Start -->
+            <div class="section">
+                <h2>⚡ Quick Start (5 Minutes)</h2>
+                <div class="option-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h3 style="color: white;">Get Reports Visible on GitHub Now!</h3>
+                    <ol style="font-size: 1.1em; line-height: 2;">
+                        <li>Copy content from <strong>GITHUB_ACTIONS_WORKFLOW.yml</strong></li>
+                        <li>Create new file: <strong>.github/workflows/playwright-tests.yml</strong></li>
+                        <li>Paste and commit</li>
+                        <li>Push to GitHub</li>
+                        <li>Go to <strong>Actions</strong> tab</li>
+                        <li>Download reports from <strong>Artifacts</strong></li>
+                    </ol>
+                    <p style="margin-top: 20px; font-size: 1.2em;">🎉 Done! Reports will now generate automatically!</p>
+                </div>
+            </div>
+            
+            <!-- Troubleshooting -->
+            <div class="section">
+                <h2>🔧 Troubleshooting</h2>
+                <div class="step">
+                    <h4>"I don't see the Actions tab"</h4>
+                    <p>Go to: Settings → Actions → General → Enable "Allow all actions"</p>
+                </div>
+                <div class="step">
+                    <h4>"Workflow is not running"</h4>
+                    <ul>
+                        <li>Check if file is at <code>.github/workflows/playwright-tests.yml</code></li>
+                        <li>Verify branch name matches trigger pattern</li>
+                        <li>Check workflow syntax is valid YAML</li>
+                    </ul>
+                </div>
+                <div class="step">
+                    <h4>"Can't download artifacts"</h4>
+                    <ul>
+                        <li>Artifacts expire after 30 days</li>
+                        <li>You must be logged in to GitHub</li>
+                        <li>Check if workflow completed successfully</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <h3>🎭 Happy Testing!</h3>
+            <p>Once set up, you'll see comprehensive reports for every test run!</p>
+            <p style="margin-top: 10px; opacity: 0.8;">
+                Need help? Check the <strong>HOW_TO_VIEW_REPORTS_ON_GITHUB.md</strong> file for detailed instructions.
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
